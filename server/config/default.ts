@@ -2,6 +2,7 @@ export default {
     port: 8181,
     host: "localhost",
     dbUri: "mongodb://localhost:27017/talking-ark",
+    adminToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FwcHJvdmVkIjpmYWxzZSwiX2lkIjoiNjQ1ZjFhNWFmNDEwMzI2ZWQzMWUwYTNlIiwiZW1haWwiOiJvYmlubmFleWVAZ21haWwuY29tIiwibmFtZSI6Ik9iaW5uYSIsImNyZWF0ZWRBdCI6IjIwMjMtMDUtMTNUMDU6MDQ6MjYuOTU1WiIsInVwZGF0ZWRBdCI6IjIwMjMtMDUtMTNUMDU6MDQ6MjYuOTU1WiIsIl9fdiI6MCwic2Vzc2lvbiI6IjY0NWYxYjA3ZjQxMDMyNmVkMzFlMGE0MSIsImlhdCI6MTY4Mzk1NDQzOSwiZXhwIjoxNjgzOTU1MzM5fQ.4rz6MtGZrgWNp1_q5FwjIH-lToZp06XdGTFGVV8kxbk",
     saltWorkFactor: 10,
     accessTokenTtl: "15m",
     refreshTokenTtl: "1y",
