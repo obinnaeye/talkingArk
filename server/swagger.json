@@ -1,0 +1,196 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "description": "Awesome chat API for Ark",
+        "version": "1.0.0",
+        "title": "Chat API",
+        "contact": {
+            "email": "obinnaeye@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },
+    "servers" : [ {
+        "url" : "http://localhost:8181/api",
+        "description" : "example"
+    } ],
+    "schemes": ["http", "https"],
+    "components": {        
+        "securitySchemes": {
+            "authorization": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }, 
+        "schemas": {
+            "talksResponse": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                         "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string"
+                    },
+                    "updatedAt": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Talk": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                },
+                "required": ["title"]
+            },
+            "NotFoundResponse": {
+                "type": "object",
+                "properties": {
+                    "statusCode": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                }
+    
+            },
+            "InvalidStatusResponse": {
+                "type": "object",
+                "properties": {
+                    "statusCode": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "fields": {
+                        "type": "array"
+                    }
+                }
+    
+            }
+        }
+    },
+    "host": "localhost:3080",
+    "basePath": "/api",
+    "paths" : {
+        "/talks" : {
+            "get" : {
+                "summary" : "Get all the talks",
+                "description": "Get all the talks",
+                "produces": ["application/json"],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/components/schemas/talksResponse"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "schema": {
+                            "$ref": "#/components/schemas/NotFoundResponse"
+                        }
+                    }
+                },
+                "security": [
+                  {
+                    "authorization": []
+                  }
+                ]
+            },
+            "post" : {
+                "summary" : "Create new talk",
+                "description": "Create new talk",
+                "produces": ["application/json"],
+                "consumes": ["application/json"],
+                "requestBody": {
+                  "content": {
+                    "application/x-www-form-urlencoded": {
+                      "schema": {
+                        "type": "object",
+                        "$ref": "#/components/schemas/Talk"
+                      }
+                    }
+                  }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/components/schemas/talksResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid status value",
+                        "schema": {
+                            "$ref": "#/components/schemas/InvalidStatusResponse"
+                        }
+                    }
+                },
+                "security": [
+                  {
+                    "authorization": []
+                  }
+                ]
+            }
+        },
+        "/talk/{talkId}" : {
+            "get" : {
+                "summary" : "Get a specific talk",
+                "description": "Get a specific talk",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "talkId",
+                        "in": "path",
+                        "description": "talk id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/components/schemas/talksResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "schema": {
+                            "$ref": "#/components/schemas/NotFoundResponse"
+                        }
+                    }
+                },
+                "security": [
+                  {
+                    "authorization": []
+                  }
+                ]
+            }
+        }
+    }
+}
