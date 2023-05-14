@@ -22,7 +22,7 @@ app.use(
 );
 
 
-app.listen(port, host, () => {
+app.listen(port, () => {
   log.info(`Server listing at http://${host}:${port}`);
 
   connect();
