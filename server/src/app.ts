@@ -1,6 +1,8 @@
 import express from "express";
 import config from "config";
 import swaggerUi from "swagger-ui-express";
+import { Server } from "socket.io";
+import { createServer } from 'http' ;
 import log from "./logger";
 import connect from "./db/connect";
 import routes from "./routes";
@@ -21,8 +23,36 @@ app.use(
   swaggerUi.setup(swggerDoc)
 );
 
+const server = createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: process.env.ORIGIN || 'http://localhost:3000',
+    methods: ['GET', 'POST'],
+  },
+});
 
-app.listen(port, () => {
+const CHAT_BOT = 'ChatBot';
+io.on('connection', (socket) => {
+  console.log(`User connected ${socket.id}`);
+  socket.on('join_room', (data) => {
+    const { username, room } = data;
+    socket.join(room);
+    let __createdtime__ = Date.now();
+    socket.to(room).emit('receive_message', {
+      message: `${username} has joined the chat room`,
+      username: CHAT_BOT,
+      __createdtime__,
+    });
+    socket.emit('receive_message', {
+      message: `Welcome ${username}`,
+      username: CHAT_BOT,
+      __createdtime__,
+    });
+  });
+});
+
+
+server.listen(port, () => {
   log.info(`Server listing at http://${host}:${port}`);
 
   connect();
