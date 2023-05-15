@@ -12,7 +12,7 @@ const requiresAdmin = async (
     ""
   );
 
-  if (accessToken !== config.get("adminToken")) {
+  if (accessToken !== process.env.adminToken) {
     return res.sendStatus(403);
   }
 
