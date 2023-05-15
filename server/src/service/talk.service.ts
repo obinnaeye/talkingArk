@@ -36,7 +36,7 @@ export function deleteTalk(query: FilterQuery<TalkDocument>) {
     return Talk.deleteOne(query);
 }
 
-export function addAttendeeToTalk(input: { talk: string, attendee: string}) {
+export function addAttendeeToTalk(input: DocumentDefinition<TalkAttendeeDocument>) {
     return TalkAttendee.create(input);
 }
 
@@ -44,4 +44,10 @@ export function findTalkAttendees(
     query: FilterQuery<TalkAttendeeDocument>
 ) {
     return TalkAttendee.find(query);
+}
+
+export function findAttendeeTalks(
+    query: FilterQuery<TalkAttendeeDocument>
+) {
+    return TalkAttendee.find(query, { title: 1, attendee: 1 });
 }

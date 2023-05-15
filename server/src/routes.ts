@@ -1,6 +1,6 @@
 import { Express, Response } from "express";
 import { createAttendeeHandler } from "./controller/attendee.controller";
-import { addAttendeeToTalkHandler, createTalkHandler, getTalkAttendeesHandler, getTalkByIdHandler, getTalksHandler } from "./controller/talk.controller";
+import { addAttendeeToTalkHandler, createTalkHandler, getAttendeeTalksHandler, getTalkAttendeesHandler, getTalkByIdHandler, getTalksHandler } from "./controller/talk.controller";
 import { createAttendeeSessionHandler, getAttendeeSessionsHandler, invalidateAttendeeSessionHandler } from "./controller/session.controller";
 import requiresAdmin from "./middleware/requiresAdmin";
 import requiresAttendee from "./middleware/requiresAttendee";
@@ -41,6 +41,6 @@ export default function (app: Express) {
   // Get talk attendees
   app.get("/api/talks/:talkId/attendees", requiresAttendee, getTalkAttendeesHandler);
 
-  // Get specific talk attendee
-  // app.post("/api/talks/:talkId/attendees/:attendeeId", requiresAttendee, getAttendeeSessionsHandler);
+  // Get attendee talks
+  app.get("/api/attendee/talks/:email", getAttendeeTalksHandler);
 }

@@ -8,6 +8,7 @@ import {
     findTalks,
     addAttendeeToTalk,
     findTalkAttendees,
+    findAttendeeTalks,
 } from "../service/talk.service";
 
 export async function createTalkHandler(req: Request, res: Response) {
@@ -62,9 +63,7 @@ export async function deleteTalkHandler(req: Request, res: Response) {
 }
 
 export async function addAttendeeToTalkHandler(req: Request, res: Response) {
-    const talkId = get(req, "params.talkId");
-    const attendeeId = get(req, "params.attendeeId");
-    const talkAttendee = await addAttendeeToTalk({ talk: talkId, attendee: attendeeId });
+    const talkAttendee = await addAttendeeToTalk(req.body);
 
     return res.send(talkAttendee);
 }
@@ -73,4 +72,11 @@ export async function getTalkAttendeesHandler(req: Request, res: Response) {
     const talkAttendees = await findTalkAttendees(req.query || {});
 
     return res.send(talkAttendees);
+}
+
+export async function getAttendeeTalksHandler(req: Request, res: Response) {
+    const attendee = get(req, "params.email");
+    const attendeeTalks = await findAttendeeTalks({ attendee });
+
+    return res.send(attendeeTalks);
 }

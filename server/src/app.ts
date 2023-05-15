@@ -11,11 +11,18 @@ import deserializeAttendee from "./middleware/deserializeUser";
 import * as swggerDoc from "../swagger.json";
 import { harperSaveMessage } from './harperSaveMessage';
 import { harperGetMessages } from './harperGetMessage';
+import cors from 'cors';
 
 const port = Number(process.env.PORT) || config.get("port") as number;
 const host = config.get("host") as string;
-console.log(console.log(process.env.HARPERDB_URL))
 const app = express();
+const allowedOrigins = ['http://localhost:3000', 'https://ark-chat.onrender.com/'];
+
+const options: cors.CorsOptions = {
+  origin: allowedOrigins
+};
+app.use(cors(options));
+
 app.use(deserializeAttendee);
 
 app.use(express.json());
@@ -35,7 +42,6 @@ const io = new Server(server, {
 });
 
 const CHAT_BOT = 'ChatBot';
-let chatRoom = ''; // E.g. javascript, node,...
 let allUsers: any[] = [];
 io.on('connection', (socket) => {
   console.log(`User connected ${socket.id}`);
@@ -58,7 +64,6 @@ io.on('connection', (socket) => {
       username: CHAT_BOT,
       __createdtime__,
     });
-    chatRoom = room;
     allUsers.push({ id: socket.id, username, room });
     const chatRoomUsers = allUsers.filter((user) => user.room === room);
     socket.to(room).emit('chatroom_users', chatRoomUsers);
