@@ -46,6 +46,21 @@
                     }
                 }
             },
+            "attendeeInput": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                         "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                },
+                "required": ["email", "password", "name"]
+            },
             "attedeeTalks": {
                 "type": "object",
                 "properties": {
@@ -70,12 +85,14 @@
                 "type": "object",
                 "properties": {
                     "attendee": {
-                         "type": "string"
+                         "type": "string",
+                         "description": "Attendee Email"
                     },
                     "title": {
                         "type": "string"
                     }
-                }
+                },
+                "required": ["attendee"]
             },
             "Talk": {
                 "type": "object",
@@ -88,6 +105,23 @@
                     }
                 },
                 "required": ["title"]
+            },
+            "Attendee": {
+                "type": "object",
+                "properties": {
+                    "_id": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string"
+                    },
+                    "updatedAt": {
+                        "type": "string"
+                    }
+                }
             },
             "NotFoundResponse": {
                 "type": "object",
@@ -180,6 +214,33 @@
                     "authorization": []
                   }
                 ]
+            }
+        },
+        "/attendees" : {
+            "post" : {
+                "summary" : "Create attendee account",
+                "description": "Create attendee account",
+                "produces": ["application/json"],
+                "consumes": ["application/json"],
+                "requestBody": {
+                  "content": {
+                    "application/x-www-form-urlencoded": {
+                      "schema": {
+                        "type": "object",
+                        "$ref": "#/components/schemas/attendeeInput"
+                      }
+                    }
+                  }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/components/schemas/talksResponse"
+                        }
+                    }
+                }
             }
         },
         "/talk/{talkId}" : {
