@@ -12,7 +12,7 @@ const requiresAttendee = async (
     ""
   );
 
-  if (accessToken === config.get("adminToken")) {
+  if (accessToken === process.env.adminToken) {
     return next();
   }
   const attendee = get(req, "attendee");
