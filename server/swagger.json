@@ -46,6 +46,37 @@
                     }
                 }
             },
+            "attedeeTalks": {
+                "type": "object",
+                "properties": {
+                    "_id": {
+                         "type": "string"
+                    },
+                    "attendee": {
+                         "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string"
+                    },
+                    "updatedAt": {
+                        "type": "string"
+                    }
+                }
+            },
+            "attendeeToTalk": {
+                "type": "object",
+                "properties": {
+                    "attendee": {
+                         "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    }
+                }
+            },
             "Talk": {
                 "type": "object",
                 "properties": {
@@ -190,6 +221,81 @@
                     "authorization": []
                   }
                 ]
+            }
+        },
+        "/talks/{talkId}/attendees" : {
+            "post" : {
+                "summary" : "Add an attendee to a talk",
+                "description": "Add an attendee to a talk",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "talkId",
+                        "in": "path",
+                        "description": "talk id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "requestBody": {
+                  "content": {
+                    "application/x-www-form-urlencoded": {
+                      "schema": {
+                        "type": "object",
+                        "$ref": "#/components/schemas/attendeeToTalk"
+                      }
+                    }
+                  }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "object"
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "schema": {
+                            "$ref": "#/components/schemas/NotFoundResponse"
+                        }
+                    }
+                },
+                "security": [
+                  {
+                    "authorization": []
+                  }
+                ]
+            }
+        },
+        "/attendee/talks/{email}" : {
+            "get" : {
+                "summary" : "Get all talks for an attendee",
+                "description": "Get all talks for an attendee",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "description": "attendee email",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array"
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "schema": {
+                            "$ref": "#/components/schemas/NotFoundResponse"
+                        }
+                    }
+                }
             }
         }
     }
