@@ -16,7 +16,7 @@ import cors from 'cors';
 const port = Number(process.env.PORT) || config.get("port") as number;
 const host = config.get("host") as string;
 const app = express();
-const allowedOrigins = ['http://localhost:3000', 'https://ark-chat.onrender.com/'];
+const allowedOrigins = ['http://localhost:3000', 'https://ark-chat.onrender.com'];
 
 const options: cors.CorsOptions = {
   origin: allowedOrigins
