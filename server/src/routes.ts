@@ -30,7 +30,7 @@ export default function (app: Express) {
   app.post("/api/talks", requiresAdmin, createTalkHandler);
 
   // Get talks
-  app.get("/api/talks", requiresAttendee, getTalksHandler);
+  app.get("/api/talks", getTalksHandler);
 
   // Get a specific talk
   app.get("/api/talk/:talkId", requiresAttendee, getTalkByIdHandler);

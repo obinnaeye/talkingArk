@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { get } from "lodash";
+import { findAttendee } from "../service/attendee.service";
 import {
     createTalk,
     findTalk,
@@ -63,7 +64,17 @@ export async function deleteTalkHandler(req: Request, res: Response) {
 }
 
 export async function addAttendeeToTalkHandler(req: Request, res: Response) {
-    const talkAttendee = await addAttendeeToTalk(req.body);
+    const attendee = await findAttendee({email: req.body.attendee});
+    console.log(attendee)
+    if(!attendee) {
+        return res.send({message: "Attendee not found"});
+    }
+    const talkId = get(req, "params.talkId");
+    const talk = await findTalk({ talkId });
+    if(!talk) {
+        return res.send({message: "Talk not found"});
+    }
+    const talkAttendee = await addAttendeeToTalk({...req.body, title: talk.title});
 
     return res.send(talkAttendee);
 }

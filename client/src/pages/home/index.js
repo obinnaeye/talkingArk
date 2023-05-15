@@ -46,7 +46,7 @@ const Home = ({ username, setUsername, room, setRoom, socket }) => {
         <h1>{`<>Ark Rooms</>`}</h1>
         <input
           className={styles.input}
-          placeholder='Username...'
+          placeholder='Email...'
           onChange={(e) => setUsername(e.target.value)}
         />
         { options && (
