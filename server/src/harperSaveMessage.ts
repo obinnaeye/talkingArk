@@ -1,8 +1,8 @@
 import axios from "axios"
 
 export function harperSaveMessage(message: string, username: string, room: string, __createdtime__: string) {
-  const dbUrl = "https://cloud-1-talkingark.harperdbcloud.com";
-  const dbPw = "a2luZ29iaTptYXQ2MTA=";
+    const dbUrl = process.env.HARPERDB_URL;
+    const dbPw = process.env.HARPERDB_PW;
   if (!dbUrl || !dbPw) return null;
 
   let data = JSON.stringify({
