@@ -143,12 +143,7 @@
                             "$ref": "#/components/schemas/NotFoundResponse"
                         }
                     }
-                },
-                "security": [
-                  {
-                    "authorization": []
-                  }
-                ]
+                }
             },
             "post" : {
                 "summary" : "Create new talk",
